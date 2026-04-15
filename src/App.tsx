@@ -552,7 +552,7 @@ function HomePage() {
             to="/can2026"
             className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#f5e9c7] px-4 py-2.5 font-semibold text-[#3a6882] transition hover:bg-[#fbf2d8]"
           >
-            进入 can2026
+            查看详情
           </Link>
         </article>
       </section>
