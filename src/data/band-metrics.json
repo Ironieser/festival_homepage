@@ -1,0 +1,496 @@
+[
+  {
+    "name": "Civil Service",
+    "fetchedAt": "2026-04-15T17:01:05.739Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/5iwChmxGWTx7STQTrstGEt",
+    "monthlyListeners": 574,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "FAYZZ",
+    "fetchedAt": "2026-04-15T17:01:15.797Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/3ZY9K4EgThtyd66T3156Tt",
+    "monthlyListeners": 4030,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "Human Tetris",
+    "fetchedAt": "2026-04-15T17:01:25.370Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/3wIDY01itbfdsQpMsyRZVG",
+    "monthlyListeners": 180794,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "Covet",
+    "fetchedAt": "2026-04-15T17:01:35.020Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/46iJ1VD4HKFnqjISGqlZkV",
+    "monthlyListeners": 91115,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token 'L', \"L><HEAD><m\"... is not valid JSON"
+  },
+  {
+    "name": "Sylvaine",
+    "fetchedAt": "2026-04-15T17:01:44.416Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/5C9ocrDvsfSz8qcxG70QEe",
+    "monthlyListeners": 41989,
+    "spotifyError": "使用人工校正值",
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token 'L', \"L><HEAD><m\"... is not valid JSON"
+  },
+  {
+    "name": "GOODBYE, KINGS",
+    "fetchedAt": "2026-04-15T17:01:53.917Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/2tVN2b4FcfGssyQBbAE9Xa",
+    "monthlyListeners": 212,
+    "spotifyError": "使用人工校正值",
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token 'L', \"L><HEAD><m\"... is not valid JSON"
+  },
+  {
+    "name": "Blue Foundation",
+    "fetchedAt": "2026-04-15T17:02:00.571Z",
+    "spotifyArtistUrl": null,
+    "monthlyListeners": 1460026,
+    "spotifyError": "使用人工校正值",
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token 'L', \"L><HEAD><m\"... is not valid JSON"
+  },
+  {
+    "name": "Eivor",
+    "fetchedAt": "2026-04-15T17:02:10.206Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/2dB4ya2W1Gvng8gjWSPu2H",
+    "monthlyListeners": 421940,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": 79.55,
+    "googleTrendPeak30d": 100,
+    "googleTrendDataPoints": 31,
+    "googleTrendBaselineAvg30d": 28.1,
+    "googleTrendBaselineAvg30dEN": 28.1,
+    "googleTrendBaselineAvg30dZH": 0,
+    "googleTrendVsBaselineRatio": 2.831,
+    "googleTrendError": null
+  },
+  {
+    "name": "重返袖珍时光",
+    "fetchedAt": "2026-04-15T17:02:19.573Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/1tHOuwYqUoAbPXcaSDTAWf",
+    "monthlyListeners": 156,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "In Inertia",
+    "fetchedAt": "2026-04-15T17:02:29.063Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/3MX16NmW4sAb3qxfGQTvlt",
+    "monthlyListeners": 18801,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "Powder! Go Away",
+    "fetchedAt": "2026-04-15T17:02:38.600Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/6cVHuIZH9rTffEFSyO1yG1",
+    "monthlyListeners": 508,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "Bruits",
+    "fetchedAt": "2026-04-15T17:02:48.126Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/5XuNycZQddvgkuH8Jh7V7C",
+    "monthlyListeners": 501639,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "Penguin Cafe",
+    "fetchedAt": "2026-04-15T17:02:58.087Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/6rAZ6OYwAXqykSlPxqGy8E",
+    "monthlyListeners": 192774,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": 54.87,
+    "googleTrendPeak30d": 100,
+    "googleTrendDataPoints": 31,
+    "googleTrendBaselineAvg30d": 48.94,
+    "googleTrendBaselineAvg30dEN": 48.94,
+    "googleTrendBaselineAvg30dZH": 0,
+    "googleTrendVsBaselineRatio": 1.1212,
+    "googleTrendError": null
+  },
+  {
+    "name": "EF",
+    "fetchedAt": "2026-04-15T17:03:07.728Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/2do4Z40QtYI2DXXc7xIlSs",
+    "monthlyListeners": 8827,
+    "spotifyError": "使用人工校正值",
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": 80.52,
+    "googleTrendPeak30d": 100,
+    "googleTrendDataPoints": 31,
+    "googleTrendBaselineAvg30d": 0.42,
+    "googleTrendBaselineAvg30dEN": 0.42,
+    "googleTrendBaselineAvg30dZH": 0,
+    "googleTrendVsBaselineRatio": 191.7143,
+    "googleTrendError": null
+  },
+  {
+    "name": "Heretoir",
+    "fetchedAt": "2026-04-15T17:03:17.238Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/4W1aTc1mS8IudqNaxfGKar",
+    "monthlyListeners": 59098,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "caroline",
+    "fetchedAt": "2026-04-15T17:03:27.076Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/4Ge8xMJNwt6EEXOzVXju9a",
+    "monthlyListeners": 74152,
+    "spotifyError": "使用人工校正值",
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "And So I Watch You From Afar",
+    "fetchedAt": "2026-04-15T17:03:36.617Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/7qKMNwlACMZOUdMG3acwst",
+    "monthlyListeners": 49278,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "厨子和戏子",
+    "fetchedAt": "2026-04-15T17:03:46.208Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/4I3hAsRQV8shx7fecJ2Y3a",
+    "monthlyListeners": 3611,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "YUFU",
+    "fetchedAt": "2026-04-15T17:03:56.158Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/4lq7hzzPRSVIU1bvThHpPj",
+    "monthlyListeners": 15302,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "Ranges",
+    "fetchedAt": "2026-04-15T17:03:58.111Z",
+    "spotifyArtistUrl": null,
+    "monthlyListeners": 3385,
+    "spotifyError": "使用人工校正值",
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "Bruno Bavota",
+    "fetchedAt": "2026-04-15T17:04:07.578Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/22kkuXdiuYd7ISzXU5o7eH",
+    "monthlyListeners": 85414,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "Sungazer",
+    "fetchedAt": "2026-04-15T17:04:16.978Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/1uvnDqn7UvVy6orSq1E2YF",
+    "monthlyListeners": 56028,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "Balmorhea",
+    "fetchedAt": "2026-04-15T17:04:26.468Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/1U0FaHAc4fcwQcYEJFgkm9",
+    "monthlyListeners": 557520,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "Unreqvited",
+    "fetchedAt": "2026-04-15T17:04:36.429Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/1ZYRTJCj869ya07OpEAlGR",
+    "monthlyListeners": 13847,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "Geordie Greep",
+    "fetchedAt": "2026-04-15T17:04:45.907Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/65Msz2E34NUtbjEbsrsJlJ",
+    "monthlyListeners": 219246,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  },
+  {
+    "name": "The Jesus and Mary Chain",
+    "fetchedAt": "2026-04-15T17:04:55.396Z",
+    "spotifyArtistUrl": "https://open.spotify.com/artist/4rjlerN21ygkIhmUv55irs",
+    "monthlyListeners": 927349,
+    "spotifyError": null,
+    "googleTrendBaselineKeywords": [
+      "Wang Wen",
+      "惘闻"
+    ],
+    "googleTrendAvg30d": null,
+    "googleTrendPeak30d": null,
+    "googleTrendDataPoints": 0,
+    "googleTrendBaselineAvg30d": null,
+    "googleTrendBaselineAvg30dEN": null,
+    "googleTrendBaselineAvg30dZH": null,
+    "googleTrendVsBaselineRatio": null,
+    "googleTrendError": "Unexpected token '<', \"<html lang\"... is not valid JSON"
+  }
+]

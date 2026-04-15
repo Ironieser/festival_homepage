@@ -7,10 +7,14 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "crawl:band-metrics": "node scripts/fetch-band-metrics.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.2",
+    "google-trends-api": "^4.9.2",
+    "happy": "^1.1.6",
+    "playwright": "^1.56.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.14.1",

@@ -1,12 +1,14 @@
 import { useMemo, useState } from 'react'
 import { Link, Navigate, Route, Routes } from 'react-router-dom'
 import insightsData from './data/band-insights.json'
+import metricsData from './data/band-metrics.json'
 import lineupData from './data/lineup.json'
 import type { BandInfo, DayKey } from './types'
 
 interface BandInsight {
   rating: string | null
   styleTags?: string[]
+  spotifyAudience?: string | null
   audience?: string | null
   summary?: string | null
   sections?: {
@@ -20,6 +22,8 @@ interface EnhancedBand extends BandInfo {
   rating: string | null
   summary: string
   insightStyleTags: string[]
+  spotifyAudience: string | null
+  monthlyListeners: number | null
   audience: string | null
   sections: {
     history: string | null
@@ -28,6 +32,11 @@ interface EnhancedBand extends BandInfo {
   }
   displayTags: { key: string; label: string }[]
   filterTags: string[]
+}
+
+interface BandMetric {
+  name: string
+  monthlyListeners: number | null
 }
 
 const dayConfigs: { key: DayKey; label: string }[] = [
@@ -132,6 +141,32 @@ const resolveCanonicalTag = (rawTag: string) => {
 
 const uniqueTags = (items: string[]) => [...new Set(items.map((item) => item.trim()).filter(Boolean))]
 
+const normalizeBandKey = (value: string) =>
+  value
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[øØ]/g, 'o')
+    .replace(/[æÆ]/g, 'ae')
+    .replace(/[œŒ]/g, 'oe')
+    .replace(/[ðÐ]/g, 'd')
+    .replace(/[þÞ]/g, 'th')
+    .toLowerCase()
+    .replace(/&/g, 'and')
+    .replace(/!/g, '')
+    .replace(/≤/g, '')
+    .replace(/[^\w\u4e00-\u9fa5]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+
+const formatMonthlyListeners = (value: number | null) => {
+  if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
+    return null
+  }
+  if (value < 1000) {
+    return '<1K'
+  }
+  return `${(value / 1000).toFixed(1).replace(/\.0$/, '')}K`
+}
+
 const buildDisplayTagsFromEnglish = (enTags: string[]) => {
   const merged = new Map<string, { zh?: string; en?: string }>()
   enTags.forEach((rawTag) => {
@@ -188,10 +223,19 @@ const renderRatingBadge = (rating: string | null, withLabel = false) => {
 function Can2026Page() {
   const lineup = lineupData as BandInfo[]
   const insights = insightsData as Record<string, BandInsight>
+  const metrics = metricsData as BandMetric[]
   const [activeDay, setActiveDay] = useState<DayKey>('2026-04-17')
   const [selectedBand, setSelectedBand] = useState<EnhancedBand | null>(null)
   const [copyState, setCopyState] = useState<string | null>(null)
   const [selectedTags, setSelectedTags] = useState<string[]>([])
+
+  const metricByBandName = useMemo(() => {
+    const map = new Map<string, number | null>()
+    metrics.forEach((metric) => {
+      map.set(normalizeBandKey(metric.name), metric.monthlyListeners)
+    })
+    return map
+  }, [metrics])
 
   const bandsInDay = useMemo(
     () =>
@@ -206,6 +250,8 @@ function Can2026Page() {
             rating: insight?.rating ?? null,
             summary: insight?.summary ?? band.description,
             insightStyleTags: insight?.styleTags ?? [],
+            spotifyAudience: insight?.spotifyAudience ?? null,
+            monthlyListeners: metricByBandName.get(normalizeBandKey(band.name)) ?? null,
             audience: insight?.audience ?? null,
             sections: {
               history: insight?.sections?.history ?? null,
@@ -216,7 +262,7 @@ function Can2026Page() {
             filterTags: mergedTags.map((tag) => tag.key),
           }
         }),
-    [activeDay, insights, lineup],
+    [activeDay, insights, lineup, metricByBandName],
   )
 
   const availableTags = useMemo(() => {
@@ -360,6 +406,7 @@ function Can2026Page() {
             </div>
           </section>
         ) : null}
+        <p className="text-xs text-sky-100/90">注：🎧 表示 Spotify 月听众。</p>
         <div className="grid gap-4 md:grid-cols-2">
           {visibleBands.map((band) => (
             <article
@@ -373,6 +420,9 @@ function Can2026Page() {
                   <p className="mt-1 text-xs text-sky-100/85">
                     {band.country}
                     {band.signingTime ? ` · 签售：${band.signingTime}` : ''}
+                    {formatMonthlyListeners(band.monthlyListeners)
+                      ? ` · 🎧 ${formatMonthlyListeners(band.monthlyListeners)}`
+                      : ''}
                   </p>
                 </div>
                 <div className="shrink-0">{renderRatingBadge(band.rating)}</div>
@@ -434,6 +484,9 @@ function Can2026Page() {
                 <p className="mt-1 text-sm text-sky-100/90">
                   {selectedBand.country}
                   {selectedBand.signingTime ? ` · 签售：${selectedBand.signingTime}` : ''}
+                  {formatMonthlyListeners(selectedBand.monthlyListeners)
+                    ? ` · 🎧 ${formatMonthlyListeners(selectedBand.monthlyListeners)}`
+                    : ''}
                 </p>
                 <p className="mt-1 text-sm text-sky-100/90">
                   演出：{selectedBand.timeRange}
@@ -497,6 +550,12 @@ function Can2026Page() {
                 <section>
                   <h4 className="text-base font-semibold text-[#f6e9c4]">国际奖项与荣誉</h4>
                   <p className="mt-1">{selectedBand.sections.honors}</p>
+                </section>
+              ) : null}
+              {selectedBand.spotifyAudience ? (
+                <section>
+                  <h4 className="text-base font-semibold text-[#f6e9c4]">Spotify听众</h4>
+                  <p className="mt-1">{selectedBand.spotifyAudience}</p>
                 </section>
               ) : null}
               {selectedBand.audience ? (
