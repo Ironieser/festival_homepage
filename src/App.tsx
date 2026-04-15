@@ -282,6 +282,14 @@ function Can2026Page() {
         <p className="inline-flex rounded-xl border border-sky-100/45 bg-[#3c7f9f]/65 px-3 py-2 text-xs text-sky-50">
           AI整理：推荐星级与标签用于快速浏览，不构成绝对评价。
         </p>
+        <a
+          href="/poster.png"
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex h-9 items-center rounded-lg border border-sky-100/45 bg-[#3f86a9]/70 px-3 text-sm font-semibold text-sky-50 transition hover:bg-[#3a7e9f]/80"
+        >
+          查看原始海报
+        </a>
       </header>
 
       <div className="sticky top-0 z-20 -mx-4 border-y border-sky-100/35 bg-[#4a91b5]/70 px-4 py-3 backdrop-blur-md sm:-mx-6 sm:px-6">
