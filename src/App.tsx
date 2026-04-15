@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, Navigate, Route, Routes } from 'react-router-dom'
 import insightsData from './data/band-insights.json'
 import metricsData from './data/band-metrics.json'
@@ -228,6 +228,14 @@ function Can2026Page() {
   const [selectedBand, setSelectedBand] = useState<EnhancedBand | null>(null)
   const [copyState, setCopyState] = useState<string | null>(null)
   const [selectedTags, setSelectedTags] = useState<string[]>([])
+  const [visitorCount, setVisitorCount] = useState<number | null>(null)
+
+  useEffect(() => {
+    fetch('https://api.counterapi.dev/v1/festival-ironieser/can2026/up')
+      .then((res) => res.json())
+      .then((data: { count: number }) => setVisitorCount(data.count))
+      .catch(() => { /* 静默失败，不影响主功能 */ })
+  }, [])
 
   const metricByBandName = useMemo(() => {
     const map = new Map<string, number | null>()
@@ -330,8 +338,8 @@ function Can2026Page() {
         </p>
         <p className="text-xs text-sky-100/70">
           已为{' '}
-          <span id="busuanzi_value_site_uv" className="font-semibold text-[#f2e6bf]">
-            --
+          <span className="font-semibold text-[#f2e6bf]">
+            {visitorCount !== null ? visitorCount.toLocaleString() : '--'}
           </span>{' '}
           位乐迷朋友提供帮助
         </p>
