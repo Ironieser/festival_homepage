@@ -229,6 +229,7 @@ function Can2026Page() {
   const [copyState, setCopyState] = useState<string | null>(null)
   const [selectedTags, setSelectedTags] = useState<string[]>([])
   const [visitorCount, setVisitorCount] = useState<number | null>(null)
+  const [showPoster, setShowPoster] = useState(false)
 
   useEffect(() => {
     fetch('https://api.counterapi.dev/v1/festival-ironieser/can2026/up')
@@ -346,14 +347,20 @@ function Can2026Page() {
         <p className="inline-flex rounded-xl border border-sky-100/45 bg-[#3c7f9f]/65 px-3 py-2 text-xs text-sky-50">
           AI整理：推荐星级与标签用于快速浏览，不构成绝对评价。
         </p>
-        <a
-          href="/poster.png"
-          target="_blank"
-          rel="noreferrer"
+        <button
+          type="button"
+          onClick={() => setShowPoster((prev) => !prev)}
           className="inline-flex h-9 items-center rounded-lg border border-sky-100/45 bg-[#3f86a9]/70 px-3 text-sm font-semibold text-sky-50 transition hover:bg-[#3a7e9f]/80"
         >
-          查看原始海报
-        </a>
+          {showPoster ? '收起海报 ↑' : '查看原始海报 ↓'}
+        </button>
+        {showPoster && (
+          <img
+            src="/poster.png"
+            alt="CAN Festival 2026 原始海报"
+            className="w-full max-w-lg rounded-2xl border border-sky-100/30 shadow-lg"
+          />
+        )}
       </header>
 
       <div className="sticky top-0 z-20 -mx-4 border-y border-sky-100/30 bg-[#4588ae]/85 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6">
