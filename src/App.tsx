@@ -528,11 +528,11 @@ function Can2026Page() {
       ) : null}
 
       <footer className="mt-8 rounded-2xl border border-sky-100/45 bg-[#4b92b6]/62 p-4 text-xs leading-6 text-sky-50/95 backdrop-blur-[2px]">
-        页面整理了演出信息、时间表与乐队要点，便于到场前后快速查阅。实际演出时间请以现场公告为准。
+        本页整理了演出信息、时间表和乐队要点，方便到场前后快速查阅；具体演出时间请以现场公告为准。
         <br />
         作者
-        <span className="font-semibold text-[#f5e9c7]"> @ironieser</span>，邮箱
-        <span className="font-semibold text-[#f5e9c7]"> ironieser@gmail.com</span>。信息错误、内容更新或补充可联系。
+        <span className="font-semibold text-[#f5e9c7]"> @ironieser</span>（
+        <span className="font-semibold text-[#f5e9c7]">ironieser@gmail.com</span>），如发现信息错误或有更新、补充建议，欢迎联系。
       </footer>
     </main>
   )
@@ -566,11 +566,11 @@ function HomePage() {
       </section>
 
       <footer className="mt-8 rounded-2xl border border-sky-100/45 bg-[#4b92b6]/62 p-4 text-xs leading-6 text-sky-50/95 backdrop-blur-[2px]">
-        页面整理了演出信息、时间表与乐队要点，便于到场前后快速查阅。实际演出时间请以现场公告为准。
+        本页整理了演出信息、时间表和乐队要点，方便到场前后快速查阅；具体演出时间请以现场公告为准。
         <br />
         作者
-        <span className="font-semibold text-[#f5e9c7]"> @ironieser</span>，邮箱
-        <span className="font-semibold text-[#f5e9c7]"> ironieser@gmail.com</span>。信息错误、内容更新或补充可联系。
+        <span className="font-semibold text-[#f5e9c7]"> @ironieser</span>（
+        <span className="font-semibold text-[#f5e9c7]">ironieser@gmail.com</span>），如发现信息错误或有更新、补充建议，欢迎联系。
       </footer>
     </main>
   )
