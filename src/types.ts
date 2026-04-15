@@ -5,6 +5,7 @@ export interface BandInfo {
   name: string
   day: DayKey
   timeRange: string
+  signingTime?: string
   country: string
   tags: string[]
   description: string

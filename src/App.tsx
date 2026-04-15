@@ -1,102 +1,581 @@
 import { useMemo, useState } from 'react'
-import { BandCard } from './components/BandCard'
-import { BandDetailDrawer } from './components/BandDetailDrawer'
-import { DayTabs } from './components/DayTabs'
-import { TagFilter } from './components/TagFilter'
+import { Link, Navigate, Route, Routes } from 'react-router-dom'
+import insightsData from './data/band-insights.json'
 import lineupData from './data/lineup.json'
 import type { BandInfo, DayKey } from './types'
 
-const days: { key: DayKey; label: string }[] = [
-  { key: '2026-04-17', label: '4.17 Fri' },
-  { key: '2026-04-18', label: '4.18 Sat' },
-  { key: '2026-04-19', label: '4.19 Sun' },
+interface BandInsight {
+  rating: string | null
+  styleTags?: string[]
+  audience?: string | null
+  summary?: string | null
+  sections?: {
+    history?: string | null
+    review?: string | null
+    honors?: string | null
+  }
+}
+
+interface EnhancedBand extends BandInfo {
+  rating: string | null
+  summary: string
+  insightStyleTags: string[]
+  audience: string | null
+  sections: {
+    history: string | null
+    review: string | null
+    honors: string | null
+  }
+  displayTags: { key: string; label: string }[]
+  filterTags: string[]
+}
+
+const dayConfigs: { key: DayKey; label: string }[] = [
+  { key: '2026-04-17', label: '4月17日 (周五)' },
+  { key: '2026-04-18', label: '4月18日 (周六)' },
+  { key: '2026-04-19', label: '4月19日 (周日)' },
 ]
 
-const lineup = lineupData as BandInfo[]
+const zhTagToCanonical: Record<string, string> = {
+  后摇: 'post-rock',
+  数学摇滚: 'math-rock',
+  后朋克: 'post-punk',
+  冷潮: 'coldwave',
+  氛围黑金: 'blackgaze',
+  后黑金: 'post-black-metal',
+  后金属: 'post-metal',
+  后民谣: 'post-folk',
+  氛围: 'ambient',
+  器乐: 'instrumental',
+  梦泡: 'shoegaze',
+  电子: 'electronic',
+  新古典: 'neo-classical',
+  器乐摇滚: 'instrumental-rock',
+}
 
-function App() {
+const canonicalTagMeta: Record<string, { zh?: string; en?: string }> = {
+  'post-rock': { zh: '后摇滚', en: 'Post-rock' },
+  'math-rock': { zh: '数学摇滚', en: 'Math-rock' },
+  'post-punk': { zh: '后朋克', en: 'Post-punk' },
+  coldwave: { zh: '冷浪', en: 'Coldwave' },
+  blackgaze: { zh: '黑界', en: 'Blackgaze' },
+  shoegaze: { zh: '盯鞋', en: 'Shoegaze' },
+  'trip-hop': { zh: '神游舞曲', en: 'Trip-hop' },
+  electronic: { zh: '电子', en: 'Electronic' },
+  'neo-classical': { zh: '新古典', en: 'Neo-classical' },
+  'instrumental-rock': { zh: '器乐摇滚', en: 'Instrumental Rock' },
+  'post-black-metal': { zh: '后黑金', en: 'Post-Black Metal' },
+  'post-metal': { zh: '后金属', en: 'Post-metal' },
+  'post-folk': { zh: '后民谣', en: 'Post-folk' },
+  ambient: { zh: '氛围', en: 'Ambient' },
+  instrumental: { zh: '器乐', en: 'Instrumental' },
+  acoustic: { zh: '原声', en: 'Acoustic' },
+  'ambient-piano': { zh: '氛围钢琴', en: 'Ambient piano' },
+  'art-rock': { zh: '艺术摇滚', en: 'Art Rock' },
+  atmospheric: { zh: '氛围感', en: 'Atmospheric' },
+  'atmospheric-black-metal': { zh: '氛围黑金属', en: 'Atmospheric Black Metal' },
+  'avant-folk': { zh: '先锋民谣', en: 'Avant-Folk' },
+  'avant-prog': { zh: '先锋前卫摇滚', en: 'Avant-Prog' },
+  'avant-pop': { zh: '先锋流行', en: 'Avant-pop' },
+  'chill-out': { zh: '驰放音乐', en: 'Chill-out' },
+  cinematic: { zh: '电影感', en: 'Cinematic' },
+  'cinematic-post-rock': { zh: '电影感后摇滚', en: 'Cinematic Post-rock' },
+  'crescendo-core': { zh: '渐强核', en: 'Crescendo-core' },
+  'dream-pop': { zh: '梦幻流行', en: 'Dream-Pop' },
+  'electro-jazz': { zh: '电子爵士', en: 'Electro-jazz' },
+  emo: { zh: '情绪硬核', en: 'Emo' },
+  experimental: { zh: '实验音乐', en: 'Experimental' },
+  'folk-rock': { zh: '民谣摇滚', en: 'Folk Rock' },
+  'future-jazz': { zh: '未来爵士', en: 'Future Jazz' },
+  indie: { zh: '独立音乐', en: 'Indie' },
+  'indie-pop': { zh: '独立流行', en: 'Indie Pop' },
+  'indie-rock': { zh: '独立摇滚', en: 'Indie Rock' },
+  jazz: { zh: '爵士乐', en: 'Jazz' },
+  'jazz-hop': { zh: '爵士嘻哈', en: 'Jazz-hop' },
+  'jazz-rock': { zh: '爵士摇滚', en: 'Jazz-rock' },
+  'latin-rock': { zh: '拉丁摇滚', en: 'Latin Rock' },
+  'lo-fi': { zh: '低保真', en: 'Lo-fi' },
+  melancholy: { zh: '忧郁', en: 'Melancholy' },
+  minimalist: { zh: '极简主义', en: 'Minimalist' },
+  'modern-classical': { zh: '现代古典', en: 'Modern Classical' },
+  noise: { zh: '噪音音乐', en: 'Noise' },
+  'noise-pop': { zh: '噪音流行', en: 'Noise-Pop' },
+  'orchestral-post-rock': { zh: '交响后摇', en: 'Orchestral Post-rock' },
+  'psychedelic-rock': { zh: '迷幻摇滚', en: 'Psychedelic Rock' },
+  screamo: { zh: '嘶吼情绪硬核', en: 'Screamo' },
+  slowcore: { zh: '慢核', en: 'Slowcore' },
+  'traditional-chinese-elements': { zh: '中国传统元素', en: 'Traditional Chinese Elements' },
+  tribal: { zh: '部落节拍', en: 'Tribal' },
+  'world-music': { zh: '世界音乐', en: 'World Music' },
+}
+
+const normalizeTagKey = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/\s+/g, '')
+    .replace(/_/g, '-')
+    .replace(/[^\w\u4e00-\u9fa5-]/g, '')
+
+const resolveCanonicalTag = (rawTag: string) => {
+  if (zhTagToCanonical[rawTag]) {
+    return zhTagToCanonical[rawTag]
+  }
+  const normalized = normalizeTagKey(rawTag)
+  const matched = Object.keys(canonicalTagMeta).find(
+    (canonical) => canonical.replace(/-/g, '') === normalized.replace(/-/g, ''),
+  )
+  return matched ?? normalized
+}
+
+const uniqueTags = (items: string[]) => [...new Set(items.map((item) => item.trim()).filter(Boolean))]
+
+const buildDisplayTagsFromEnglish = (enTags: string[]) => {
+  const merged = new Map<string, { zh?: string; en?: string }>()
+  enTags.forEach((rawTag) => {
+    const canonical = resolveCanonicalTag(rawTag)
+    const prev = merged.get(canonical) ?? {}
+    merged.set(canonical, { ...prev, en: rawTag })
+  })
+  return [...merged.entries()].map(([key, value]) => {
+    const meta = canonicalTagMeta[key]
+    const zh = value.zh ?? meta?.zh
+    const en = value.en ?? meta?.en
+    return {
+      key,
+      label: zh && en ? `${zh} / ${en}` : zh ?? en ?? key,
+    }
+  })
+}
+
+const getRatingValue = (rating: string | null) => {
+  if (!rating) {
+    return null
+  }
+  const fullStars = (rating.match(/★/g) ?? []).length
+  if (fullStars > 0) {
+    return Math.min(fullStars, 5)
+  }
+  const numeric = Number.parseFloat(rating)
+  if (Number.isFinite(numeric) && numeric > 0) {
+    return Math.min(Math.max(Math.round(numeric), 1), 5)
+  }
+  return null
+}
+
+const renderRatingBadge = (rating: string | null, withLabel = false) => {
+  const value = getRatingValue(rating)
+  if (!value) {
+    return (
+      <span className="inline-flex items-center rounded-full border border-[#f2e6bf]/60 bg-[#f2e6bf]/20 px-2.5 py-1 text-xs font-semibold text-[#ffe7a6]">
+        {withLabel ? '推荐程度：暂无评分' : '暂无评分'}
+      </span>
+    )
+  }
+
+  const stars = Array.from({ length: 5 }, (_, index) => (index < value ? '★' : '☆')).join('')
+  return (
+    <span className="inline-flex items-center gap-2 rounded-full border border-[#f2e6bf]/70 bg-[#f2e6bf]/25 px-3 py-1 text-sm font-bold tracking-wide text-[#ffe6a2]">
+      {withLabel ? <span className="text-xs font-semibold text-[#ffeec4]">推荐</span> : null}
+      <span aria-label={`评分 ${value} / 5`}>{stars}</span>
+      <span className="text-xs font-semibold text-[#ffeec4]">{value}/5</span>
+    </span>
+  )
+}
+
+function Can2026Page() {
+  const lineup = lineupData as BandInfo[]
+  const insights = insightsData as Record<string, BandInsight>
   const [activeDay, setActiveDay] = useState<DayKey>('2026-04-17')
+  const [selectedBand, setSelectedBand] = useState<EnhancedBand | null>(null)
+  const [copyState, setCopyState] = useState<string | null>(null)
   const [selectedTags, setSelectedTags] = useState<string[]>([])
-  const [selectedBand, setSelectedBand] = useState<BandInfo | null>(null)
 
   const bandsInDay = useMemo(
-    () => lineup.filter((band) => band.day === activeDay),
-    [activeDay],
+    () =>
+      lineup
+        .filter((band) => band.day === activeDay)
+        .sort((a, b) => a.timeRange.localeCompare(b.timeRange))
+        .map((band) => {
+          const insight = insights[band.id]
+          const mergedTags = buildDisplayTagsFromEnglish(uniqueTags(insight?.styleTags ?? []))
+          return {
+            ...band,
+            rating: insight?.rating ?? null,
+            summary: insight?.summary ?? band.description,
+            insightStyleTags: insight?.styleTags ?? [],
+            audience: insight?.audience ?? null,
+            sections: {
+              history: insight?.sections?.history ?? null,
+              review: insight?.sections?.review ?? null,
+              honors: insight?.sections?.honors ?? null,
+            },
+            displayTags: mergedTags,
+            filterTags: mergedTags.map((tag) => tag.key),
+          }
+        }),
+    [activeDay, insights, lineup],
   )
 
-  const availableTags = useMemo(
-    () => [...new Set(bandsInDay.flatMap((band) => band.tags))].sort(),
-    [bandsInDay],
-  )
+  const availableTags = useMemo(() => {
+    const tagMap = new Map<string, string>()
+    bandsInDay.forEach((band) => {
+      band.displayTags.forEach((tag) => {
+        if (!tagMap.has(tag.key)) {
+          tagMap.set(tag.key, tag.label)
+        }
+      })
+    })
+    return [...tagMap.entries()]
+      .map(([key, label]) => ({ key, label }))
+      .sort((a, b) => a.label.localeCompare(b.label))
+  }, [bandsInDay])
 
-  const filteredBands = useMemo(() => {
+  const visibleBands = useMemo(() => {
     if (selectedTags.length === 0) {
       return bandsInDay
     }
     return bandsInDay.filter((band) =>
-      selectedTags.every((tag) => band.tags.includes(tag)),
+      selectedTags.every((tag) => band.filterTags.includes(tag)),
     )
   }, [bandsInDay, selectedTags])
 
-  const toggleTag = (tag: string) => {
-    setSelectedTags((prev) =>
-      prev.includes(tag) ? prev.filter((item) => item !== tag) : [...prev, tag],
-    )
-  }
+  const currentDayLabel = dayConfigs.find((day) => day.key === activeDay)?.label ?? '当日'
 
-  const handleDayChange = (day: DayKey) => {
-    setActiveDay(day)
-    setSelectedTags([])
-    setSelectedBand(null)
+  const copyBandName = async (name: string, source: 'card' | 'modal') => {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(name)
+      } else {
+        const textarea = document.createElement('textarea')
+        textarea.value = name
+        textarea.style.position = 'fixed'
+        textarea.style.opacity = '0'
+        document.body.appendChild(textarea)
+        textarea.focus()
+        textarea.select()
+        document.execCommand('copy')
+        document.body.removeChild(textarea)
+      }
+      setCopyState(`${source}-${name}`)
+      window.setTimeout(() => setCopyState(null), 1200)
+    } catch {
+      setCopyState('error')
+      window.setTimeout(() => setCopyState(null), 1500)
+    }
   }
 
   return (
-    <main className="mx-auto min-h-dvh w-full max-w-4xl px-4 pb-16 pt-6 text-sky-50 sm:px-6">
+    <main className="mx-auto min-h-dvh w-full max-w-5xl px-4 pb-16 pt-6 text-sky-50 sm:px-6">
       <header className="mb-6 space-y-3">
-        <p className="text-xs uppercase tracking-[0.22em] text-[#f0e6c8]">
-          CAN Festival 2026 · Zhoushan
+        <Link
+          to="/"
+          onClick={() => setSelectedBand(null)}
+          className="inline-flex min-h-11 items-center rounded-xl border border-sky-100/45 bg-[#3f86a9]/70 px-3 py-2 text-sm text-sky-50 backdrop-blur transition hover:bg-[#3a7e9f]/80"
+        >
+          ← 返回主页
+        </Link>
+        <p className="text-xs uppercase tracking-[0.22em] text-[#f7eccf]">CAN Festival 2026 · Info</p>
+        <h1 className="text-3xl font-black leading-tight sm:text-4xl">CAN Festival 2026</h1>
+        <p className="max-w-3xl text-sm leading-6 text-sky-100/90">
+          汇总 CAN Festival 2026 的演出信息、时间表和乐队要点，便于快速浏览与现场使用。
         </p>
-        <h1 className="text-3xl font-black leading-tight sm:text-4xl">
-          CAN Festival 2026 舟山音乐节
-        </h1>
-        <p className="max-w-2xl text-sm leading-6 text-sky-100/90">
-          CAN Festival 2026 舟山站阵容总览，按日期和风格快速浏览每日演出。
-        </p>
-        <p className="text-xs text-sky-100/80">
-          页面作者：<span className="font-semibold text-[#f4e1a3]">@ironieser</span>
+        <p className="inline-flex rounded-xl border border-sky-100/45 bg-[#3c7f9f]/65 px-3 py-2 text-xs text-sky-50">
+          AI整理：推荐星级与标签用于快速浏览，不构成绝对评价。
         </p>
       </header>
 
-      <DayTabs days={days} activeDay={activeDay} onDayChange={handleDayChange} />
+      <div className="sticky top-0 z-20 -mx-4 border-y border-sky-100/35 bg-[#4a91b5]/70 px-4 py-3 backdrop-blur-md sm:-mx-6 sm:px-6">
+        <div className="flex gap-2 overflow-x-auto">
+          {dayConfigs.map((day) => (
+            <button
+              key={day.key}
+              type="button"
+              onClick={() => {
+                setActiveDay(day.key)
+                setSelectedBand(null)
+                setSelectedTags([])
+              }}
+              className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${
+                activeDay === day.key
+                  ? 'bg-[#f5e9c7] text-[#3a6882]'
+                  : 'bg-[#3f83a6]/80 text-sky-50 hover:bg-[#3a7898]'
+              }`}
+            >
+              {day.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
-      <section className="mt-5 space-y-5">
-        <TagFilter
-          tags={availableTags}
-          selectedTags={selectedTags}
-          onToggleTag={toggleTag}
-          onReset={() => setSelectedTags([])}
-        />
-
-        {filteredBands.length > 0 ? (
-          <div className="grid gap-4 md:grid-cols-2">
-            {filteredBands.map((band) => (
-              <BandCard key={band.id} band={band} onOpen={setSelectedBand} />
-            ))}
-          </div>
-        ) : (
-          <p className="rounded-2xl border border-sky-100/30 bg-[#3f82a8]/70 p-5 text-sm text-sky-50">
-            当前筛选条件下没有匹配乐队，试试减少标签条件。
-          </p>
-        )}
+      <section className="mt-5 space-y-4">
+        <h2 className="text-lg font-semibold text-[#f8edcf]">{currentDayLabel}</h2>
+        <p className="text-sm text-sky-100/85">当天演出时间表（按时间排序）+ 乐队要点速览</p>
+        {availableTags.length > 0 ? (
+          <section className="space-y-3">
+            <div className="flex items-center justify-between gap-3">
+              <h3 className="text-sm font-semibold uppercase tracking-wide text-[#e7f5ff]">风格筛选</h3>
+              <button
+                type="button"
+                onClick={() => setSelectedTags([])}
+                className="text-sm text-[#f4e1a3] underline-offset-2 hover:underline"
+              >
+                清空
+              </button>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {availableTags.map((tag) => {
+                const active = selectedTags.includes(tag.key)
+                return (
+                  <button
+                    key={tag.key}
+                    type="button"
+                    onClick={() =>
+                      setSelectedTags((prev) =>
+                        prev.includes(tag.key)
+                          ? prev.filter((item) => item !== tag.key)
+                          : [...prev, tag.key],
+                      )
+                    }
+                    className={`rounded-full border px-3 py-1.5 text-xs transition ${
+                      active
+                        ? 'border-[#f5e9c7] bg-[#f5e9c7] text-[#3a6882]'
+                        : 'border-sky-100/45 bg-[#3f83a6]/75 text-sky-50 hover:border-sky-100/70'
+                    }`}
+                  >
+                    {tag.label}
+                  </button>
+                )
+              })}
+            </div>
+          </section>
+        ) : null}
+        <div className="grid gap-4 md:grid-cols-2">
+          {visibleBands.map((band) => (
+            <article
+              key={band.id}
+              className="rounded-2xl border border-sky-100/45 bg-[#4a8fb3]/62 p-4 shadow-sm backdrop-blur-[2px]"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-sm font-medium text-[#f8edcf]">{band.timeRange}</p>
+                  <h3 className="text-xl font-bold leading-tight text-white">{band.name}</h3>
+                  <p className="mt-1 text-xs text-sky-100/85">
+                    {band.country}
+                    {band.signingTime ? ` · 签售：${band.signingTime}` : ''}
+                  </p>
+                </div>
+                <div className="shrink-0">{renderRatingBadge(band.rating)}</div>
+              </div>
+              {band.displayTags.length > 0 ? (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {band.displayTags.map((tag) => (
+                    <span
+                      key={`${band.id}-${tag.key}`}
+                      className="rounded-full border border-sky-100/40 bg-[#3f83a6]/65 px-2.5 py-1 text-xs text-sky-50"
+                    >
+                      {tag.label}
+                    </span>
+                  ))}
+                </div>
+              ) : null}
+              <p className="mt-3 line-clamp-4 text-sm leading-6 text-sky-50/90">{band.summary}</p>
+              <div className="mt-4 flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => copyBandName(band.name, 'card')}
+                  className="h-9 rounded-lg border border-sky-100/45 bg-[#3f86a9]/75 px-3 text-xs font-semibold text-sky-50 transition hover:bg-[#3a7e9f]/85"
+                >
+                  {copyState === `card-${band.name}`
+                    ? '已复制'
+                    : copyState === 'error'
+                      ? '复制失败'
+                      : '复制乐队名'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedBand(band)}
+                  className="min-h-11 flex-1 rounded-xl bg-[#f5e9c7] px-3 py-2.5 text-sm font-semibold text-[#3a6882] transition hover:bg-[#fbf2d8]"
+                >
+                  查看完整档案
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
 
-      <footer className="mt-8 rounded-2xl border border-sky-100/30 bg-[#3f82a8]/70 p-4 text-xs leading-6 text-sky-50/95">
-        CAN Festival 2026 舟山站阵容总览，按日期和风格快速浏览每日演出。实际演出时间请以现场公告为准。网页作者
-        <span className="font-semibold text-[#f4e1a3]"> @ironieser</span>。
-      </footer>
+      {selectedBand ? (
+        <div
+          className="fixed inset-0 z-40 flex items-end bg-black/60 p-0 md:items-center md:justify-center md:p-6"
+          onClick={() => setSelectedBand(null)}
+          role="presentation"
+        >
+          <div
+            className="max-h-[88vh] w-full overflow-y-auto rounded-t-3xl border border-sky-100/45 bg-[#4b92b6]/95 p-5 md:max-w-3xl md:rounded-3xl"
+            onClick={(event) => event.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${selectedBand.name} 乐队完整档案`}
+          >
+            <div className="mb-4 flex items-start justify-between gap-3">
+              <div>
+                <h3 className="text-2xl font-bold text-white">{selectedBand.name}</h3>
+                <p className="mt-1 text-sm text-sky-100/90">
+                  {selectedBand.country}
+                  {selectedBand.signingTime ? ` · 签售：${selectedBand.signingTime}` : ''}
+                </p>
+                <p className="mt-1 text-sm text-sky-100/90">
+                  演出：{selectedBand.timeRange}
+                </p>
+                <div className="mt-1">{renderRatingBadge(selectedBand.rating, true)}</div>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => copyBandName(selectedBand.name, 'modal')}
+                  className="min-h-11 rounded-full border border-sky-100/45 bg-[#3f86a9]/80 px-4 text-sm text-sky-50"
+                >
+                  {copyState === `modal-${selectedBand.name}` ? '已复制' : '复制乐队名'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSelectedBand(null)}
+                  className="min-h-11 rounded-full border border-sky-100/45 bg-[#3f86a9]/80 px-4 text-sm text-sky-50"
+                >
+                  关闭
+                </button>
+              </div>
+            </div>
 
-      <BandDetailDrawer band={selectedBand} onClose={() => setSelectedBand(null)} />
+            <p className="mb-4 rounded-xl border border-sky-100/45 bg-[#3f86a9]/65 px-3 py-2 text-xs text-sky-50">
+              AI整理：以下评估信息仅供参考。
+            </p>
+
+            {selectedBand.displayTags.length > 0 ? (
+              <div className="mb-4 flex flex-wrap gap-2">
+                {selectedBand.displayTags.map((tag) => (
+                  <span
+                    key={`modal-${selectedBand.id}-${tag.key}`}
+                    className="rounded-full border border-sky-100/40 bg-[#3f83a6]/65 px-2.5 py-1 text-xs text-sky-50"
+                  >
+                    {tag.label}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+
+            <div className="space-y-4 text-sm leading-7 text-sky-50/95">
+              {selectedBand.sections.history ? (
+                <section>
+                  <h4 className="text-base font-semibold text-[#f6e9c4]">发展历程与专辑演变</h4>
+                  <p className="mt-1">{selectedBand.sections.history}</p>
+                </section>
+              ) : (
+                <section>
+                  <h4 className="text-base font-semibold text-[#f6e9c4]">乐队简介</h4>
+                  <p className="mt-1">{selectedBand.description}</p>
+                </section>
+              )}
+              {selectedBand.sections.review ? (
+                <section>
+                  <h4 className="text-base font-semibold text-[#f6e9c4]">AI评价</h4>
+                  <p className="mt-1">{selectedBand.sections.review}</p>
+                </section>
+              ) : null}
+              {selectedBand.sections.honors ? (
+                <section>
+                  <h4 className="text-base font-semibold text-[#f6e9c4]">国际奖项与荣誉</h4>
+                  <p className="mt-1">{selectedBand.sections.honors}</p>
+                </section>
+              ) : null}
+              {selectedBand.audience ? (
+                <section>
+                  <h4 className="text-base font-semibold text-[#f6e9c4]">适合人群</h4>
+                  <p className="mt-1">{selectedBand.audience}</p>
+                </section>
+              ) : null}
+              {selectedBand.insightStyleTags.length > 0 ? (
+                <section>
+                  <h4 className="text-base font-semibold text-[#f6e9c4]">风格标签（扩展）</h4>
+                  <p className="mt-1">{selectedBand.insightStyleTags.join(' / ')}</p>
+                </section>
+              ) : null}
+              <section>
+                <h4 className="text-base font-semibold text-[#f6e9c4]">代表曲目</h4>
+                <p className="mt-1">{selectedBand.topTracks.join(' / ')}</p>
+              </section>
+              <section>
+                <h4 className="text-base font-semibold text-[#f6e9c4]">推荐专辑</h4>
+                <p className="mt-1">{selectedBand.albums.join(' / ')}</p>
+              </section>
+              {selectedBand.note ? (
+                <section>
+                  <h4 className="text-base font-semibold text-[#f6e9c4]">补充说明</h4>
+                  <p className="mt-1">{selectedBand.note}</p>
+                </section>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      <footer className="mt-8 rounded-2xl border border-sky-100/45 bg-[#4b92b6]/62 p-4 text-xs leading-6 text-sky-50/95 backdrop-blur-[2px]">
+        页面整理了演出信息、时间表与乐队要点，便于到场前后快速查阅。实际演出时间请以现场公告为准。
+        <br />
+        作者
+        <span className="font-semibold text-[#f5e9c7]"> @ironieser</span>，邮箱
+        <span className="font-semibold text-[#f5e9c7]"> ironieser@gmail.com</span>。信息错误、内容更新或补充可联系。
+      </footer>
     </main>
+  )
+}
+
+function HomePage() {
+  return (
+    <main className="mx-auto min-h-dvh w-full max-w-5xl px-4 pb-16 pt-10 text-sky-50 sm:px-6">
+      <header className="space-y-3">
+        <p className="text-xs uppercase tracking-[0.22em] text-[#f7eccf]">FESTIVAL.IRONIESER.CC</p>
+        <h1 className="text-3xl font-black leading-tight sm:text-4xl">音乐节主页</h1>
+        <p className="max-w-3xl text-sm leading-6 text-sky-100/90">
+          这是音乐节信息的统一入口，当前收录 CAN Festival 2026，后续将持续补充新的音乐节页面。
+        </p>
+      </header>
+
+      <section className="mt-8 grid gap-4 md:grid-cols-2">
+        <article className="rounded-2xl border border-sky-100/45 bg-[#4a8fb3]/62 p-5 shadow-sm backdrop-blur-[2px]">
+          <p className="text-xs uppercase tracking-[0.18em] text-[#f8edcf]">2026</p>
+          <h2 className="mt-1 text-2xl font-bold text-white">CAN Festival</h2>
+          <p className="mt-3 text-sm leading-6 text-sky-50/90">
+            汇总 CAN Festival 2026 的演出信息、时间表和乐队要点。
+          </p>
+          <Link
+            to="/can2026"
+            className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#f5e9c7] px-4 py-2.5 font-semibold text-[#3a6882] transition hover:bg-[#fbf2d8]"
+          >
+            进入 can2026
+          </Link>
+        </article>
+      </section>
+
+      <footer className="mt-8 rounded-2xl border border-sky-100/45 bg-[#4b92b6]/62 p-4 text-xs leading-6 text-sky-50/95 backdrop-blur-[2px]">
+        页面整理了演出信息、时间表与乐队要点，便于到场前后快速查阅。实际演出时间请以现场公告为准。
+        <br />
+        作者
+        <span className="font-semibold text-[#f5e9c7]"> @ironieser</span>，邮箱
+        <span className="font-semibold text-[#f5e9c7]"> ironieser@gmail.com</span>。信息错误、内容更新或补充可联系。
+      </footer>
+    </main>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/can2026" element={<Can2026Page />} />
+      <Route path="/can2026/" element={<Can2026Page />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   )
 }
 

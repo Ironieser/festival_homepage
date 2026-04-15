@@ -1,5 +1,2 @@
-/  /can2026/  302
-/can2026/favicon.svg  /favicon.svg  200
-/can2026/icons.svg  /icons.svg  200
-/can2026/poster.png  /poster.png  200
-/can2026/assets/*  /assets/:splat  200
+/can2026  /index.html  200
+/can2026/  /index.html  200

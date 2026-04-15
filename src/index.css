@@ -3,8 +3,8 @@
 :root {
   font-family: "Inter", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
     system-ui, sans-serif;
-  color: #eef7fb;
-  background-color: #2f6f90;
+  color: #f4fbff;
+  background-color: #3a7fa3;
 }
 
 * {
@@ -19,9 +19,16 @@ body,
 
 body {
   margin: 0;
-  background-color: #4f96bb;
+  background-color: #62a8c7;
   background-image:
-    radial-gradient(120% 100% at 50% -20%, rgba(214, 237, 247, 0.45) 0%, rgba(79, 150, 187, 0) 60%),
-    linear-gradient(180deg, #66a9cc 0%, #4f96bb 45%, #3d7ea4 100%);
-  color: #eef7fb;
+    radial-gradient(120% 90% at 50% -18%, rgba(232, 247, 255, 0.55) 0%, rgba(98, 168, 199, 0) 58%),
+    repeating-linear-gradient(
+      180deg,
+      rgba(188, 226, 242, 0.14) 0px,
+      rgba(188, 226, 242, 0.14) 1px,
+      rgba(0, 0, 0, 0) 1px,
+      rgba(0, 0, 0, 0) 22px
+    ),
+    linear-gradient(180deg, #7ebcd9 0%, #62a8c7 48%, #4f94b8 100%);
+  color: #f4fbff;
 }
