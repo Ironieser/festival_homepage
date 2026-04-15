@@ -85,6 +85,7 @@ const canonicalTagMeta: Record<string, { zh?: string; en?: string }> = {
   'electro-jazz': { zh: '电子爵士', en: 'Electro-jazz' },
   emo: { zh: '情绪硬核', en: 'Emo' },
   experimental: { zh: '实验音乐', en: 'Experimental' },
+  folk: { zh: '民谣', en: 'Folk' },
   'folk-rock': { zh: '民谣摇滚', en: 'Folk Rock' },
   'future-jazz': { zh: '未来爵士', en: 'Future Jazz' },
   indie: { zh: '独立音乐', en: 'Indie' },
@@ -100,8 +101,10 @@ const canonicalTagMeta: Record<string, { zh?: string; en?: string }> = {
   'modern-classical': { zh: '现代古典', en: 'Modern Classical' },
   noise: { zh: '噪音音乐', en: 'Noise' },
   'noise-pop': { zh: '噪音流行', en: 'Noise-Pop' },
+  nordic: { zh: '北欧风', en: 'Nordic' },
   'orchestral-post-rock': { zh: '交响后摇', en: 'Orchestral Post-rock' },
   'psychedelic-rock': { zh: '迷幻摇滚', en: 'Psychedelic Rock' },
+  alternative: { zh: '另类', en: 'Alternative' },
   screamo: { zh: '嘶吼情绪硬核', en: 'Screamo' },
   slowcore: { zh: '慢核', en: 'Slowcore' },
   'traditional-chinese-elements': { zh: '中国传统元素', en: 'Traditional Chinese Elements' },
@@ -142,7 +145,7 @@ const buildDisplayTagsFromEnglish = (enTags: string[]) => {
     const en = value.en ?? meta?.en
     return {
       key,
-      label: zh && en ? `${zh} / ${en}` : zh ?? en ?? key,
+      label: zh && en ? `${en}(${zh})` : en ?? zh ?? key,
     }
   })
 }
@@ -292,7 +295,7 @@ function Can2026Page() {
         </a>
       </header>
 
-      <div className="sticky top-0 z-20 -mx-4 border-y border-sky-100/35 bg-[#4a91b5]/70 px-4 py-3 backdrop-blur-md sm:-mx-6 sm:px-6">
+      <div className="sticky top-0 z-20 -mx-4 border-y border-sky-100/30 bg-[#4588ae]/85 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6">
         <div className="flex gap-2 overflow-x-auto">
           {dayConfigs.map((day) => (
             <button
@@ -305,8 +308,8 @@ function Can2026Page() {
               }}
               className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition ${
                 activeDay === day.key
-                  ? 'bg-[#f5e9c7] text-[#3a6882]'
-                  : 'bg-[#3f83a6]/80 text-sky-50 hover:bg-[#3a7898]'
+                  ? 'bg-[#f2e6bf] text-[#3f6d86]'
+                  : 'bg-[#3c789a] text-sky-50 hover:bg-[#356d8c]'
               }`}
             >
               {day.label}
@@ -361,11 +364,11 @@ function Can2026Page() {
           {visibleBands.map((band) => (
             <article
               key={band.id}
-              className="rounded-2xl border border-sky-100/45 bg-[#4a8fb3]/62 p-4 shadow-sm backdrop-blur-[2px]"
+              className="rounded-2xl border border-sky-100/30 bg-[#3e80a5]/80 p-4 shadow-sm"
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-sm font-medium text-[#f8edcf]">{band.timeRange}</p>
+                  <p className="text-sm font-medium text-[#f2e6bf]">{band.timeRange}</p>
                   <h3 className="text-xl font-bold leading-tight text-white">{band.name}</h3>
                   <p className="mt-1 text-xs text-sky-100/85">
                     {band.country}
@@ -402,7 +405,7 @@ function Can2026Page() {
                 <button
                   type="button"
                   onClick={() => setSelectedBand(band)}
-                  className="min-h-11 flex-1 rounded-xl bg-[#f5e9c7] px-3 py-2.5 text-sm font-semibold text-[#3a6882] transition hover:bg-[#fbf2d8]"
+                  className="min-h-11 flex-1 rounded-xl bg-[#f2e6bf] px-3 py-2.5 text-sm font-semibold text-[#3f6d86] transition hover:bg-[#f8eecf]"
                 >
                   查看完整档案
                 </button>
@@ -419,7 +422,7 @@ function Can2026Page() {
           role="presentation"
         >
           <div
-            className="max-h-[88vh] w-full overflow-y-auto rounded-t-3xl border border-sky-100/45 bg-[#4b92b6]/95 p-5 md:max-w-3xl md:rounded-3xl"
+            className="max-h-[88vh] w-full overflow-y-auto rounded-t-3xl border border-sky-100/30 bg-[#3f82a8] p-5 md:max-w-3xl md:rounded-3xl"
             onClick={(event) => event.stopPropagation()}
             role="dialog"
             aria-modal="true"
@@ -504,8 +507,12 @@ function Can2026Page() {
               ) : null}
               {selectedBand.insightStyleTags.length > 0 ? (
                 <section>
-                  <h4 className="text-base font-semibold text-[#f6e9c4]">风格标签（扩展）</h4>
-                  <p className="mt-1">{selectedBand.insightStyleTags.join(' / ')}</p>
+                  <h4 className="text-base font-semibold text-[#f6e9c4]">风格</h4>
+                  <p className="mt-1">
+                    {buildDisplayTagsFromEnglish(selectedBand.insightStyleTags)
+                      .map((tag) => tag.label)
+                      .join(' / ')}
+                  </p>
                 </section>
               ) : null}
               <section>
@@ -514,7 +521,11 @@ function Can2026Page() {
               </section>
               <section>
                 <h4 className="text-base font-semibold text-[#f6e9c4]">推荐专辑</h4>
-                <p className="mt-1">{selectedBand.albums.join(' / ')}</p>
+                <ul className="mt-1 list-disc space-y-1 pl-5">
+                  {selectedBand.albums.map((album) => (
+                    <li key={`${selectedBand.id}-album-${album}`}>{album}</li>
+                  ))}
+                </ul>
               </section>
               {selectedBand.note ? (
                 <section>
@@ -527,7 +538,7 @@ function Can2026Page() {
         </div>
       ) : null}
 
-      <footer className="mt-8 rounded-2xl border border-sky-100/45 bg-[#4b92b6]/62 p-4 text-xs leading-6 text-sky-50/95 backdrop-blur-[2px]">
+      <footer className="mt-8 rounded-2xl border border-sky-100/30 bg-[#3f82a8]/70 p-4 text-xs leading-6 text-sky-50/95">
         本页整理了演出信息、时间表和乐队要点，方便到场前后快速查阅；具体演出时间请以现场公告为准。
         <br />
         作者
@@ -550,7 +561,7 @@ function HomePage() {
       </header>
 
       <section className="mt-8 grid gap-4 md:grid-cols-2">
-        <article className="rounded-2xl border border-sky-100/45 bg-[#4a8fb3]/62 p-5 shadow-sm backdrop-blur-[2px]">
+        <article className="rounded-2xl border border-sky-100/30 bg-[#3e80a5]/80 p-5 shadow-sm">
           <p className="text-xs uppercase tracking-[0.18em] text-[#f8edcf]">2026</p>
           <h2 className="mt-1 text-2xl font-bold text-white">CAN Festival</h2>
           <p className="mt-3 text-sm leading-6 text-sky-50/90">
@@ -558,14 +569,14 @@ function HomePage() {
           </p>
           <Link
             to="/can2026"
-            className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#f5e9c7] px-4 py-2.5 font-semibold text-[#3a6882] transition hover:bg-[#fbf2d8]"
+            className="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[#f2e6bf] px-4 py-2.5 font-semibold text-[#3f6d86] transition hover:bg-[#f8eecf]"
           >
             查看详情
           </Link>
         </article>
       </section>
 
-      <footer className="mt-8 rounded-2xl border border-sky-100/45 bg-[#4b92b6]/62 p-4 text-xs leading-6 text-sky-50/95 backdrop-blur-[2px]">
+      <footer className="mt-8 rounded-2xl border border-sky-100/30 bg-[#3f82a8]/70 p-4 text-xs leading-6 text-sky-50/95">
         本页整理了演出信息、时间表和乐队要点，方便到场前后快速查阅；具体演出时间请以现场公告为准。
         <br />
         作者
