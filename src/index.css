@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+:root {
+  font-family: "Inter", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    system-ui, sans-serif;
+  color: #eef7fb;
+  background-color: #2f6f90;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #4f96bb;
+  background-image:
+    radial-gradient(120% 100% at 50% -20%, rgba(214, 237, 247, 0.45) 0%, rgba(79, 150, 187, 0) 60%),
+    linear-gradient(180deg, #66a9cc 0%, #4f96bb 45%, #3d7ea4 100%);
+  color: #eef7fb;
+}
