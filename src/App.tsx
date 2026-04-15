@@ -328,6 +328,13 @@ function Can2026Page() {
         <p className="max-w-3xl text-sm leading-6 text-sky-100/90">
           汇总 CAN Festival 2026 的演出信息、时间表和乐队要点，便于快速浏览与现场使用。
         </p>
+        <p className="text-xs text-sky-100/70">
+          已为{' '}
+          <span id="busuanzi_value_site_uv" className="font-semibold text-[#f2e6bf]">
+            --
+          </span>{' '}
+          位乐迷朋友提供帮助
+        </p>
         <p className="inline-flex rounded-xl border border-sky-100/45 bg-[#3c7f9f]/65 px-3 py-2 text-xs text-sky-50">
           AI整理：推荐星级与标签用于快速浏览，不构成绝对评价。
         </p>
