@@ -1,2 +1,3 @@
+/can2026/assets/*  /can2026/assets/:splat  200
 /can2026/*  /can2026/index.html  200
 /  /can2026/  302
